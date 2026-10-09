@@ -2,4 +2,4 @@
 
 Exploring Human × Machine
 
-Creative studio website. GitHub Pages: deploy from the main branch, root folder.
+Static creative studio website. Publish GitHub Pages from main, root folder.
