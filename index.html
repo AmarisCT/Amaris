@@ -211,6 +211,25 @@ section[id] { scroll-margin-top: 20px; }
 .slide-controls button { background: transparent; color: inherit; border: 1px solid #ffffff40; padding: 6px 8px; cursor: pointer; font: inherit; }
 .slide-controls button:hover { background: #ffffff18; }
 
+/* ---------- From the archive ---------- */
+.head-link { border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+.archive-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: start; }
+.essay { padding: 26px 0 30px; border-top: 1px solid var(--line); }
+.essay:last-child { border-bottom: 1px solid var(--line); }
+.essay-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.essay h3 { font-family: Georgia, serif; font-size: 28px; line-height: 1.25; margin: 14px 0 12px; max-width: 640px; }
+.essay h3 a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s; }
+.essay h3 a:hover, .essay h3 a:focus-visible { background-size: 100% 1px; }
+.essay p { margin: 0; font-size: 14px; line-height: 1.75; color: var(--muted); max-width: 640px; }
+.rooms { background: linear-gradient(150deg, #2b2b2b, #161616); color: #ecece6; padding: 30px 30px 18px; }
+.rooms h3 { font-size: 21px; margin: 0 0 8px; }
+.rooms p { margin: 0 0 18px; font-size: 13px; line-height: 1.7; color: #c9c9c4; }
+.rooms ul { list-style: none; margin: 0; padding: 0; }
+.rooms li { border-top: 1px solid #ffffff22; }
+.rooms li a { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; font-size: 14px; }
+.rooms li a:hover span { transform: translate(2px, -2px); }
+.rooms li span { transition: transform .2s; }
+
 /* ---------- The studio ---------- */
 .about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10%; }
 .about h2 { font-size: 52px; line-height: 1.06; }
@@ -277,6 +296,10 @@ footer nav a:hover { color: #000; border-color: #000; }
   section { padding: 50px 6%; }
   h2 { font-size: 40px; }
   .work, .about { grid-template-columns: 1fr; gap: 35px; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .archive-grid { grid-template-columns: 1fr; gap: 35px; }
+  .essay h3 { font-size: 24px; }
+  .rooms { padding: 26px 22px 14px; }
   .about h2 { font-size: 43px; }
   .about p, .discipline p { font-size: 16px; }
   .discipline { grid-template-columns: 25px 1fr; }
@@ -295,6 +318,7 @@ footer nav a:hover { color: #000; border-color: #000; }
   <a class="brand" href="#" aria-label="amaris ct home"><img src="amaris-wordmark.webp" width="2172" height="724" alt=""></a>
   <nav aria-label="Main navigation">
     <a href="#work">Selected work</a>
+    <a href="#archive">From the archive</a>
     <a href="#studio">The studio</a>
     <a href="#behind-banner">Behind the banner</a>
     <a href="#connect">Connect</a>
@@ -352,6 +376,40 @@ footer nav a:hover { color: #000; border-color: #000; }
         <p>A cozy digital space for organizing the week, bringing planning and personal routines into an illustrated room.</p>
         <span class="note">Still in development</span>
       </article>
+    </div>
+  </section>
+
+  <section id="archive" class="archive">
+    <div class="section-head">
+      <div><span class="small">02 / From the archive</span><h2>New from Artificially Intelligent.</h2></div>
+      <a class="small head-link" href="https://amarisct.github.io/Artificially-Intelligent/research/published/" target="_blank" rel="noopener">All published essays ↗</a>
+    </div>
+    <div class="archive-grid">
+      <!-- Baked-in latest essays; refreshed from the archive's manifest when the page loads -->
+      <div class="essays" id="latest-essays">
+        <article class="essay">
+          <div class="essay-meta"><span>Essay</span><time datetime="2026-10-07">Oct 7, 2026</time><span>7 min read</span></div>
+          <h3><a href="https://amarisct.github.io/Artificially-Intelligent/research/published/we-are-all-archives-now/" target="_blank" rel="noopener">We Are All Archives Now</a></h3>
+          <p>Historical archives began with the needs of the living. Today, our messages, photographs, and digital traces create records that circulate beyond us. What changes when artificial intelligence learns from what we leave behind?</p>
+        </article>
+        <article class="essay">
+          <div class="essay-meta"><span>Essay</span><time datetime="2026-09-19">Sep 19, 2026</time><span>13 min read</span></div>
+          <h3><a href="https://amarisct.github.io/Artificially-Intelligent/research/published/is-human-consciousness-connected-to-artificial-intelligence/" target="_blank" rel="noopener">Is Human Consciousness Connected to Artificial Intelligence?</a></h3>
+          <p>What if artificial intelligence is not separate from human consciousness, but a reflection of it? This article explores the relationship between the human mind and intelligent machines, and what that connection could reveal about memory, identity, awareness, and what it means to think.</p>
+        </article>
+      </div>
+      <aside class="rooms" aria-labelledby="rooms-title">
+        <h3 id="rooms-title">Inside the archive</h3>
+        <p>Rooms for exploring ideas, not just reading about them.</p>
+        <ul>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/theory-chamber/" target="_blank" rel="noopener">The Theory Chamber <span>↗</span></a></li>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/museum/" target="_blank" rel="noopener">The Museum of Human Memory <span>↗</span></a></li>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/learning-institute/" target="_blank" rel="noopener">The Learning Institute <span>↗</span></a></li>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/lexicon/" target="_blank" rel="noopener">The Lexicon of Intelligence <span>↗</span></a></li>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/unanswered-archive/" target="_blank" rel="noopener">The Unanswered Archive <span>↗</span></a></li>
+          <li><a href="https://amarisct.github.io/Artificially-Intelligent/research-commons/" target="_blank" rel="noopener">The Research Commons <span>↗</span></a></li>
+        </ul>
+      </aside>
     </div>
   </section>
 
@@ -454,6 +512,35 @@ footer nav a:hover { color: #000; border-color: #000; }
     if (!paused && !document.hidden && !root.matches(':hover') && !root.contains(document.activeElement)) show(i + 1);
   }, 4000);
   update();
+})();
+
+/* Latest essays: refresh the baked-in list from Artificially Intelligent's
+   published manifest (same origin), so new essays appear here automatically. */
+(() => {
+  const list = document.getElementById('latest-essays');
+  if (!list || !window.fetch) return;
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const fmt = iso => {
+    const d = new Date(iso + 'T12:00:00');
+    return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+  const safeUrl = u => /^https:\/\/amarisct\.github\.io\//.test(u || '') ? u : null;
+  fetch('/Artificially-Intelligent/research/published/manifest.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(data => {
+      const items = (data && Array.isArray(data.articles) ? data.articles : [])
+        .filter(a => a && a.title && safeUrl(a.url))
+        .sort((a, b) => String(b.publishedAt).localeCompare(String(a.publishedAt)))
+        .slice(0, 3);
+      if (!items.length) return;
+      list.innerHTML = items.map(a => `
+        <article class="essay">
+          <div class="essay-meta"><span>${esc(a.category || 'Essay')}</span>${a.publishedAt ? `<time datetime="${esc(a.publishedAt)}">${esc(fmt(a.publishedAt))}</time>` : ''}${a.readingMinutes ? `<span>${esc(a.readingMinutes)} min read</span>` : ''}</div>
+          <h3><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a></h3>
+          ${a.excerpt ? `<p>${esc(a.excerpt)}</p>` : ''}
+        </article>`).join('');
+    })
+    .catch(() => { /* keep the baked-in essays */ });
 })();
 </script>
 </body>
