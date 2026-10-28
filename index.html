@@ -230,6 +230,28 @@ section[id] { scroll-margin-top: 20px; }
 .rooms li a:hover span { transform: translate(2px, -2px); }
 .rooms li span { transition: transform .2s; }
 
+.subscribe { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 56px; padding: 34px; background: linear-gradient(120deg, #ededeb, #d3d3d1); border: 1px solid #b3b3b1; }
+.subscribe h3 { font-family: Georgia, serif; font-size: 28px; margin: 0 0 10px; }
+.subscribe p { margin: 0 0 14px; font-size: 14px; line-height: 1.75; color: var(--muted); max-width: 420px; }
+.subscribe .link { display: inline-block; font-size: 12px; border-bottom: 1px solid; padding-bottom: 4px; }
+.subscribe-frame { width: 100%; height: 320px; border: 0; background: #fff; display: block; }
+
+/* ---------- Studio log ---------- */
+.log-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.log-list li { display: grid; grid-template-columns: 130px 190px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.log-list time { font-size: 12px; color: var(--muted); padding-top: 3px; }
+.log-tag { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.log-list b { font-weight: 400; font-size: 17px; }
+.log-list p { margin: 6px 0 0; font-size: 13px; line-height: 1.7; color: var(--muted); max-width: 640px; }
+.log-list a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.log-list b a { text-decoration: none; }
+.log-list b a:hover { text-decoration: underline; }
+.log-earlier summary { cursor: pointer; padding: 18px 0; font-size: 12px; list-style: none; display: inline-flex; gap: 10px; align-items: center; border-bottom: 1px solid var(--ink); margin-top: 8px; }
+.log-earlier summary::-webkit-details-marker { display: none; }
+.log-earlier summary:after { content: "↓"; }
+.log-earlier[open] summary:after { content: "↑"; }
+.log-earlier[open] .log-list { margin-top: 18px; }
+
 /* ---------- The studio ---------- */
 .about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10%; }
 .about h2 { font-size: 52px; line-height: 1.06; }
@@ -300,6 +322,10 @@ footer nav a:hover { color: #000; border-color: #000; }
   .archive-grid { grid-template-columns: 1fr; gap: 35px; }
   .essay h3 { font-size: 24px; }
   .rooms { padding: 26px 22px 14px; }
+  .subscribe { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+  .subscribe-frame { height: 330px; }
+  .log-list li { grid-template-columns: 1fr; gap: 6px; }
+  .log-list time, .log-tag { padding-top: 0; }
   .about h2 { font-size: 43px; }
   .about p, .discipline p { font-size: 16px; }
   .discipline { grid-template-columns: 25px 1fr; }
@@ -320,6 +346,7 @@ footer nav a:hover { color: #000; border-color: #000; }
     <a href="#work">Selected work</a>
     <a href="#archive">From the archive</a>
     <a href="#studio">The studio</a>
+    <a href="#log">Studio log</a>
     <a href="#behind-banner">Behind the banner</a>
     <a href="#connect">Connect</a>
   </nav>
@@ -411,10 +438,18 @@ footer nav a:hover { color: #000; border-color: #000; }
         </ul>
       </aside>
     </div>
+    <div class="subscribe" id="subscribe">
+      <div class="subscribe-copy">
+        <h3>New essays, by email.</h3>
+        <p>Subscribe to Artificially Intelligent on Substack. It’s free, and new research arrives in your inbox as it’s published.</p>
+        <a class="link" href="https://artificialxintelligence.substack.com/" target="_blank" rel="noopener">Read it on Substack instead ↗</a>
+      </div>
+      <iframe class="subscribe-frame" src="https://artificialxintelligence.substack.com/embed" title="Subscribe to Artificially Intelligent on Substack" loading="lazy" scrolling="no"></iframe>
+    </div>
   </section>
 
   <section id="studio" class="about">
-    <div><span class="small">02 / The studio</span><h2>A question is<br>a place to begin.</h2></div>
+    <div><span class="small">03 / The studio</span><h2>A question is<br>a place to begin.</h2></div>
     <div>
       <p>amaris ct, short for amaris creative tech, explores how human thought, feeling, and imagination take form through technology.</p>
       <p>Through research, writing, art, and digital experiences, the studio’s intent is to create spaces to question, connect, and imagine what might become possible.</p>
@@ -426,9 +461,35 @@ footer nav a:hover { color: #000; border-color: #000; }
     </div>
   </section>
 
+  <section id="log" class="log">
+    <div class="section-head">
+      <div><span class="small">04 / Studio log</span><h2>What’s new.</h2></div>
+      <span class="small">Launches across every project</span>
+    </div>
+    <ol class="log-list">
+      <li><time datetime="2026-10-28">Oct 28, 2026</time><span class="log-tag">amaris ct</span><div><b>The studio site grows</b><p>The newest essays from the archive, a newsletter sign-up, and this log.</p></div></li>
+      <li><time datetime="2026-10-19">Oct 19, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/research-commons/" target="_blank" rel="noopener">The Research Commons opens ↗</a></b><p>A shared space for collections and contributions. Visitor submissions stay off until a secure service is in place.</p></div></li>
+      <li><time datetime="2026-10-19">Oct 19, 2026</time><span class="log-tag">amaris ct</span><div><b>One studio, every project</b><p>amaris ct becomes the parent home of its projects, with one <a href="privacy.html">privacy policy</a> and one set of <a href="terms.html">terms</a> for all of them.</p></div></li>
+      <li><time datetime="2026-10-16">Oct 16, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/learning-institute/" target="_blank" rel="noopener">The Learning Institute ↗</a></b><p>Two foundational courses, the Learning Compass, a Journey Map, and a Research Seminar.</p></div></li>
+      <li><time datetime="2026-10-16">Oct 16, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/search/" target="_blank" rel="noopener">One research index ↗</a></b><p>The Inquiry Engine, the Lexicon of Intelligence, and Universal Research Search now draw on one shared index.</p></div></li>
+      <li><time datetime="2026-10-15">Oct 15, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b>A new home and four new rooms</b><p>The redesign becomes the main site, alongside the <a href="https://amarisct.github.io/Artificially-Intelligent/theory-chamber/" target="_blank" rel="noopener">Theory Chamber</a>, the <a href="https://amarisct.github.io/Artificially-Intelligent/museum/" target="_blank" rel="noopener">Museum of Human Memory</a>, the <a href="https://amarisct.github.io/Artificially-Intelligent/unanswered-archive/" target="_blank" rel="noopener">Unanswered Archive</a>, and the <a href="https://amarisct.github.io/Artificially-Intelligent/research-observatory/" target="_blank" rel="noopener">Research Observatory</a>.</p></div></li>
+    </ol>
+    <details class="log-earlier">
+      <summary>Earlier entries</summary>
+      <ol class="log-list">
+        <li><time datetime="2026-10-14">Oct 14, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/research-atlas/" target="_blank" rel="noopener">The Research Atlas ↗</a></b><p>An interactive map of concepts and how the published research connects.</p></div></li>
+        <li><time datetime="2026-10-09">Oct 9, 2026</time><span class="log-tag">amaris ct</span><div><b>The studio site launches</b><p>A home for the studio’s research, digital experiences, and creative worlds.</p></div></li>
+        <li><time datetime="2026-10-09">Oct 9, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b>Consciousness Map and Intelligence Index</b><p>An <a href="https://amarisct.github.io/Artificially-Intelligent/interactives/consciousness-map.html" target="_blank" rel="noopener">interactive map of consciousness research</a> and a free <a href="https://amarisct.github.io/Artificially-Intelligent/intelligence-index/" target="_blank" rel="noopener">search across public research</a>.</p></div></li>
+        <li><time datetime="2026-10-07">Oct 7, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/research/published/we-are-all-archives-now/" target="_blank" rel="noopener">Essay: We Are All Archives Now ↗</a></b><p>What changes when artificial intelligence learns from what we leave behind.</p></div></li>
+        <li><time datetime="2026-09-25">Sep 25, 2026</time><span class="log-tag">The Weekly Planner</span><div><b>The Weekly Planner begins</b><p>First build of the illustrated planning room.</p></div></li>
+        <li><time datetime="2026-09-19">Sep 19, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b>Artificially Intelligent launches</b><p>The research archive opens with its first essay, <a href="https://amarisct.github.io/Artificially-Intelligent/research/published/is-human-consciousness-connected-to-artificial-intelligence/" target="_blank" rel="noopener">Is Human Consciousness Connected to Artificial Intelligence?</a></p></div></li>
+      </ol>
+    </details>
+  </section>
+
   <section id="behind-banner" class="banner-story">
     <div class="section-head">
-      <div><span class="small">03 / Behind the banner</span><h2>The space between.</h2></div>
+      <div><span class="small">05 / Behind the banner</span><h2>The space between.</h2></div>
     </div>
     <figure>
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg/1280px-Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg"
@@ -458,7 +519,7 @@ footer nav a:hover { color: #000; border-color: #000; }
   </section>
 
   <section id="connect" class="contact">
-    <div><span class="small">04 / Connect</span><h2>Say hello.</h2></div>
+    <div><span class="small">06 / Connect</span><h2>Say hello.</h2></div>
     <div>
       <p>For collaborations, questions, or a conversation about the work, reach the studio on LinkedIn.</p>
       <a class="cta primary" href="https://www.linkedin.com/in/jojomojojo222/" target="_blank" rel="noopener">Message amaris ct on LinkedIn <span>↗</span></a>
