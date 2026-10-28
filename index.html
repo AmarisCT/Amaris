@@ -130,7 +130,7 @@ header {
 }
 .brand { font-size: 25px; }
 .brand img { width: 145px; height: 43px; object-fit: cover; object-position: center; }
-nav { display: flex; gap: 32px; font-size: 12px; }
+nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px 28px; font-size: 12px; }
 nav a:hover { color: #000; }
 
 /* ---------- Hero ---------- */
@@ -263,6 +263,11 @@ section[id] { scroll-margin-top: 20px; }
 .discipline b { font-weight: 400; font-size: 16px; }
 .discipline p { font-size: 12px; line-height: 1.6; margin: 0; }
 
+.founder { display: flex; align-items: center; gap: 16px; margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--line); }
+.founder img { width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 1px 2px #0003; }
+.about .founder p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.founder a { color: var(--ink); border-bottom: 1px solid currentColor; white-space: nowrap; }
+
 /* ---------- Behind the banner ---------- */
 .banner-story figure { margin: 35px 0 0; }
 .banner-story figure img { display: block; width: 100%; height: auto; border: 1px solid #7775; }
@@ -273,6 +278,28 @@ section[id] { scroll-margin-top: 20px; }
 .story-copy h3 { font-family: Georgia, serif; font-size: 30px; line-height: 1.3; }
 .story-subhead { margin-top: 48px; }
 .story-copy .link { display: inline-block; font-size: 12px; border-bottom: 1px solid; padding-bottom: 5px; }
+
+/* ---------- Work together ---------- */
+.together-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.together-card { padding: 34px; background: linear-gradient(140deg, #efefed, #d6d6d4); border: 1px solid #b3b3b1; display: flex; flex-direction: column; align-items: flex-start; }
+.together-card:last-child { background: linear-gradient(150deg, #2b2b2b, #161616); color: #ecece6; border-color: #111; }
+.together-card .small { color: var(--muted); }
+.together-card:last-child .small { color: #bdbdb8; }
+.together-card h3 { font-family: Georgia, serif; font-size: 30px; margin: 12px 0 10px; }
+.together-card p { margin: 0 0 16px; font-size: 14px; line-height: 1.75; color: var(--muted); max-width: 520px; }
+.together-card:last-child p { color: #c9c9c4; }
+.offer { list-style: none; margin: 4px 0 22px; padding: 0; width: 100%; border-top: 1px solid var(--line); }
+.together-card:last-child .offer { border-color: #ffffff22; }
+.offer li { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.together-card:last-child .offer li { border-color: #ffffff22; }
+.offer b { font-weight: 400; font-size: 15px; }
+.offer b a { border-bottom: 1px solid currentColor; }
+.offer span { font-size: 13px; line-height: 1.6; color: var(--muted); }
+.together-card:last-child .offer span { color: #c9c9c4; }
+.together-card .cta { margin-top: auto; }
+.together-card:last-child .cta { border-color: #ecece6; }
+.cta.solid { background: #262626; color: #f3f3f1; border: 0; padding: 17px 22px; gap: 30px; }
+.cta.solid:hover { background: #000; }
 
 /* ---------- Connect ---------- */
 .contact {
@@ -327,6 +354,10 @@ footer nav a:hover { color: #000; border-color: #000; }
   .subscribe-frame { height: 330px; }
   .log-list li { grid-template-columns: 1fr; gap: 6px; }
   .log-list time, .log-tag { padding-top: 0; }
+  .together-grid { grid-template-columns: 1fr; gap: 20px; }
+  .together-card { padding: 26px 20px; }
+  .offer li { grid-template-columns: 1fr; gap: 4px; }
+  .founder { align-items: flex-start; }
   .about h2 { font-size: 43px; }
   .about p, .discipline p { font-size: 16px; }
   .discipline { grid-template-columns: 25px 1fr; }
@@ -349,6 +380,7 @@ footer nav a:hover { color: #000; border-color: #000; }
     <a href="#studio">The studio</a>
     <a href="#log">Studio log</a>
     <a href="#behind-banner">Behind the banner</a>
+    <a href="#together">Work together</a>
     <a href="#connect">Connect</a>
   </nav>
 </header>
@@ -463,6 +495,10 @@ footer nav a:hover { color: #000; border-color: #000; }
         <div class="discipline"><span>02</span><b>Digital experiences</b><p>Websites and interactive explorations that give ideas a form.</p></div>
         <div class="discipline"><span>03</span><b>Creative worlds</b><p>Characters, animations, illustrated stories, and imagined worlds.</p></div>
       </div>
+      <div class="founder">
+        <img src="favicon-32.png" srcset="icon-192.png 2x" width="44" height="44" alt="">
+        <p>amaris ct is an independent studio run by Jasleen. <a href="https://www.linkedin.com/in/jojomojojo222/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a></p>
+      </div>
     </div>
   </section>
 
@@ -472,7 +508,7 @@ footer nav a:hover { color: #000; border-color: #000; }
       <span class="small">Launches across every project</span>
     </div>
     <ol class="log-list">
-      <li><time datetime="2026-10-28">Oct 28, 2026</time><span class="log-tag">amaris ct</span><div><b>The studio site grows</b><p>The newest essays from the archive, a newsletter sign-up, and this log.</p></div></li>
+      <li><time datetime="2026-10-28">Oct 28, 2026</time><span class="log-tag">amaris ct</span><div><b>The studio site grows</b><p>The newest essays from the archive, a newsletter sign-up, a <a href="worlds.html">Creative Worlds gallery</a>, ways to work together, and this log.</p></div></li>
       <li><time datetime="2026-10-19">Oct 19, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/research-commons/" target="_blank" rel="noopener">The Research Commons opens ↗</a></b><p>A shared space for collections and contributions. Visitor submissions stay off until a secure service is in place.</p></div></li>
       <li><time datetime="2026-10-19">Oct 19, 2026</time><span class="log-tag">amaris ct</span><div><b>One studio, every project</b><p>amaris ct becomes the parent home of its projects, with one <a href="privacy.html">privacy policy</a> and one set of <a href="terms.html">terms</a> for all of them.</p></div></li>
       <li><time datetime="2026-10-16">Oct 16, 2026</time><span class="log-tag">Artificially Intelligent</span><div><b><a href="https://amarisct.github.io/Artificially-Intelligent/learning-institute/" target="_blank" rel="noopener">The Learning Institute ↗</a></b><p>Two foundational courses, the Learning Compass, a Journey Map, and a Research Seminar.</p></div></li>
@@ -523,8 +559,39 @@ footer nav a:hover { color: #000; border-color: #000; }
     </figure>
   </section>
 
+  <section id="together" class="together">
+    <div class="section-head">
+      <div><span class="small">06 / Work together</span><h2>Make something with the studio.</h2></div>
+    </div>
+    <div class="together-grid">
+      <div class="together-card">
+        <span class="small">Commissions &amp; collaborations</span>
+        <h3>Work with amaris ct</h3>
+        <p>The studio is open to projects that sit between people and technology.</p>
+        <ul class="offer">
+          <li><b>Research &amp; writing</b><span>Essays, explainers, and research on cognition, identity, culture, and AI.</span></li>
+          <li><b>Digital experiences</b><span>Websites and interactive explorations that give an idea a form.</span></li>
+          <li><b>Creative worlds</b><span>Characters, illustrated stories, and visual directions.</span></li>
+        </ul>
+        <p>Projects begin with a conversation. Send a short note about what you have in mind.</p>
+        <a class="cta solid" href="https://www.linkedin.com/in/jojomojojo222/" target="_blank" rel="noopener">Start a conversation on LinkedIn <span>↗</span></a>
+      </div>
+      <div class="together-card">
+        <span class="small">Support the studio</span>
+        <h3>Help the research grow</h3>
+        <p>Artificially Intelligent is independent and free to read. A few ways to help keep it that way:</p>
+        <ul class="offer">
+          <li><b><a href="#subscribe">Subscribe</a></b><span>Get new essays by email. It’s free and helps the work find its readers.</span></li>
+          <li><b>Share an essay</b><span>Pass a piece to someone who would enjoy the question it asks.</span></li>
+          <li><b>Sponsor the research</b><span>Organizations interested in supporting Artificially Intelligent can reach out to talk about sponsorship.</span></li>
+        </ul>
+        <a class="cta" href="https://www.linkedin.com/in/jojomojojo222/" target="_blank" rel="noopener">Ask about sponsorship <span>↗</span></a>
+      </div>
+    </div>
+  </section>
+
   <section id="connect" class="contact">
-    <div><span class="small">06 / Connect</span><h2>Say hello.</h2></div>
+    <div><span class="small">07 / Connect</span><h2>Say hello.</h2></div>
     <div>
       <p>For collaborations, questions, or a conversation about the work, reach the studio on LinkedIn.</p>
       <a class="cta primary" href="https://www.linkedin.com/in/jojomojojo222/" target="_blank" rel="noopener">Message amaris ct on LinkedIn <span>↗</span></a>
