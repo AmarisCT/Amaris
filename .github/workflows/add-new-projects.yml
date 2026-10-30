@@ -1,0 +1,75 @@
+name: Add new projects to the studio gallery
+
+# Every 30 minutes, look at the AmarisCT GitHub account. A new public repo with
+# a description or a live site is added to the gallery and the studio log on
+# https://amarisct.github.io/Amaris/. See scripts/build_projects.py.
+on:
+  schedule:
+    - cron: "11,41 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/projects.json"
+      - "data/log.json"
+      - "scripts/build_projects.py"
+      - ".github/workflows/add-new-projects.yml"
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: studio-gallery
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install picture tools
+        run: pip install --quiet "pillow>=10"
+
+      - name: Look for new projects
+        id: look
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/build_projects.py --fetch
+
+      - name: Install a browser for screenshots
+        if: steps.look.outputs.needs_screenshots == 'true'
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Screenshot new project sites
+        if: steps.look.outputs.needs_screenshots == 'true'
+        run: python scripts/build_projects.py --screenshots
+
+      - name: Publish changes
+        id: publish
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing new."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -F "$RUNNER_TEMP/commit-message.txt"
+          git pull -q --rebase origin main
+          git push -q origin HEAD:main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild the site
+        if: steps.publish.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null || echo "GitHub Pages will rebuild on its own."
