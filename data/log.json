@@ -2,6 +2,12 @@
   {
     "date": "2026-10-30",
     "tag": "amaris ct",
+    "title": "A new look for the studio",
+    "text": "The whole site becomes a silver room with floating glass windows, and the gallery gets a soundtrack: a Spotify Chill Mix that changes over time."
+  },
+  {
+    "date": "2026-10-30",
+    "tag": "amaris ct",
     "title": "The gallery opens",
     "url": "#work",
     "text": "Selected work becomes a gallery, and new projects now join it as soon as they’re published on GitHub."

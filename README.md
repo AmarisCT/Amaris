@@ -56,7 +56,14 @@ The log in `index.html` is generated from `data/log.json` (between `<!-- log:sta
 
 ## Studio soundtrack
 
-The music button in the gallery plays Brian Eno's *An Ending (Ascent)* through Spotify's embed (`TRACK` in the gallery script in `index.html`). Nothing loads from Spotify until a visitor presses the button. Visitors who aren't signed in to Spotify may hear a 30-second preview. To change the song, replace the track ID, and keep the Spotify note in `privacy.html` accurate.
+The music button in the gallery plays a Spotify **Chill Mix** playlist (`spotify:playlist:37i9dQZF1EVHGWrwldPRtj`, `PLAYLIST` in the gallery script in `index.html`). Spotify refreshes the mix on its own, so the songs rotate. Nothing loads from Spotify until a visitor presses the button. Visitors who aren't signed in to Spotify may hear 30-second previews. To change it, replace the playlist ID, and keep the Spotify note in `privacy.html` accurate.
+
+## The look
+
+- `studio.css` is shared by every page: the silver room behind the site (`.env`), glass windows (`.window`), glass panels (`.glass`, `.smoke`), rounded list groups (`.inset-list`), glass buttons (`.pill`), the floating tab bar (`.tabbar`: on the left at 1100px and wider, at the bottom on smaller screens) and the glass footer.
+- `legal.css` adds the page title and reading styles for Privacy, Terms, Creative Worlds and the 404 page.
+- Each page starts its body with `<div class="env">` and the same tab bar markup. The 404 page uses `/Amaris/` paths because it can be served at any address.
+- Visitors who ask for reduced transparency get solid panels, and reduced motion turns the animations off.
 
 ## Contact and brand
 
