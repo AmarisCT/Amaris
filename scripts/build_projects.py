@@ -223,6 +223,23 @@ def day_label(iso):
     return f"{d:%b} {d.day}, {d.year}"
 
 
+def site_is_off(url, repo, info, owner):
+    """True when url is the repo's GitHub Pages address but Pages isn't turned on."""
+    if not (repo and info and url):
+        return False
+    pages = f"https://{owner.lower()}.github.io/{repo.lower()}"
+    return url.lower().rstrip("/") == pages and not info.get("has_pages") and not info.get("homepage")
+
+
+def live_url(url, repos, owner):
+    """For links anywhere on the page: a project's Pages address, or its
+    GitHub page while its site is off."""
+    for repo, info in repos.items():
+        if site_is_off(url, repo, info, owner):
+            return info.get("html_url") or f"https://github.com/{owner}/{repo}"
+    return url
+
+
 def resolve(entry, repos, owner):
     """Everything the gallery needs for one project. Fields set in
     data/projects.json win over what GitHub and the project's site say."""
@@ -235,6 +252,15 @@ def resolve(entry, repos, owner):
     picture = entry.get("image") or (f"assets/projects/{repo}.webp" if repo and (ASSETS / f"{repo}.webp").exists() else "")
     icon = entry.get("icon") or (f"assets/projects/{repo}-icon.png" if repo and (ASSETS / f"{repo}-icon.png").exists() else "")
     url = entry.get("url") or address or (info.get("html_url") or "")
+    link_label = entry.get("link_label") or (f"Visit {title}" if address else "See it on GitHub")
+    details = dict(entry.get("details") or {
+        "Medium": "Website" if address else "Code",
+        "Added": day_label(entry["added"]) if entry.get("added") else "",
+    })
+    if site_is_off(url, repo, info, owner):
+        url = info.get("html_url") or f"https://github.com/{owner}/{repo}"
+        link_label = "See it on GitHub"
+        details["Status"] = "Site coming soon"
     return {
         "id": entry.get("id") or slug(title),
         "title": title,
@@ -242,12 +268,9 @@ def resolve(entry, repos, owner):
         "started": entry.get("started") or (info.get("created") or entry.get("added") or "")[:10],
         "tagline": entry.get("tagline") or about,
         "summary": entry.get("summary") or about,
-        "details": entry.get("details") or {
-            "Medium": "Website" if address else "Code",
-            "Added": day_label(entry["added"]) if entry.get("added") else "",
-        },
+        "details": details,
         "url": url,
-        "link_label": entry.get("link_label") or (f"Visit {title}" if address else "See it on GitHub"),
+        "link_label": link_label,
         "github": f"https://github.com/{owner}/{repo}" if repo else "",
         "image": picture,
         "image_alt": entry.get("image_alt") or (f"{title}’s website" if picture else ""),
@@ -317,11 +340,12 @@ def card_html(p, number, total):
     )
 
 
-def log_html(entries):
+def log_html(entries, fix=lambda u: u):
     def item(x):
         title = e(x["title"])
         if x.get("url"):
-            title = f'<a href="{e(x["url"])}"{link_attrs(x["url"])}>{title}{" ↗" if link_attrs(x["url"]) else ""}</a>'
+            url = fix(x["url"])
+            title = f'<a href="{e(url)}"{link_attrs(url)}>{title}{" ↗" if link_attrs(url) else ""}</a>'
         return (
             f'<li><time datetime="{e(x["date"])}">{e(day_label(x["date"]))}</time>'
             f'<span class="log-tag">{e(x["tag"])}</span><div><b>{title}</b><p>{x.get("text", "")}</p></div></li>'
@@ -372,7 +396,7 @@ def render(cfg, repos, log):
     cards = "\n".join(card_html(p, i + 1, total) for i, p in enumerate(projects)) + "\n"
     page = INDEX.read_text(encoding="utf-8")
     page = replace_between(page, "projects", cards)
-    page = replace_between(page, "log", log_html(log))
+    page = replace_between(page, "log", log_html(log, lambda u: live_url(u, repos, owner)))
     page = update_structured_data(page, projects)
     changed = write_if_changed(INDEX, page)
     if changed and SITEMAP.exists():
