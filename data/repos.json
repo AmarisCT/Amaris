@@ -575,7 +575,7 @@
     "name": "TarotParot",
     "description": "",
     "homepage": "",
-    "has_pages": false,
+    "has_pages": true,
     "created": "2026-10-29",
     "html_url": "https://github.com/AmarisCT/TarotParot",
     "fork": false,
