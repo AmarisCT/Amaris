@@ -6,12 +6,14 @@ every 30 minutes. It can also be run by hand:
 
   python3 scripts/build_projects.py                 re-render from data/ (no network)
   python3 scripts/build_projects.py --fetch         also look on GitHub for new projects
-  python3 scripts/build_projects.py --screenshots   also screenshot new sites that have no picture
+  python3 scripts/build_projects.py --covers        also draw covers for new projects with no share image
 
 What counts as a new project: a public repo on the account that isn't a fork,
 isn't archived, has at least one commit, isn't already listed in
 data/projects.json ("projects" or "not_shown"), and has either a description
 or a live website. New projects are added to the gallery and to the studio log.
+Their picture is the site's own share image (og:image); without one, a cover is
+drawn from the project's icon, name, tagline and theme color. Never a screenshot.
 
 Files:
   data/projects.json   the gallery: curated entries, auto-added entries, and repos to leave off
@@ -150,6 +152,7 @@ def site_info(url):
         "description": m.get("og:description") or m.get("description", ""),
         "image": absolute(m.get("og:image", "")),
         "icon": absolute(icon),
+        "theme": m.get("theme-color", ""),
     }
 
 
@@ -173,19 +176,58 @@ def save_picture(url, dest, width):
         return False
 
 
-def screenshot(url, dest):
+COVER = """<!doctype html><html><head><meta charset="utf-8"><style>
+html, body { margin: 0; width: 1440px; height: 900px; overflow: hidden; }
+body { font-family: -apple-system, "Segoe UI", "Helvetica Neue", "Liberation Sans", Arial, sans-serif; color: %(ink)s;
+  background: radial-gradient(ellipse 80%% 70%% at 50%% 38%%, %(light)s 0%%, %(base)s 58%%, %(dark)s 100%%); }
+svg { position: absolute; inset: 0; }
+.c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 0 50px; }
+.icon { width: 150px; height: 150px; border-radius: 36px; object-fit: cover; margin-bottom: 30px; box-shadow: 0 26px 50px -24px #0009, 0 0 0 1px #ffffff40; }
+.eyebrow { margin: 0 0 16px; font-size: 18px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; opacity: .72; }
+h1 { margin: 0; max-width: 780px; font-size: 112px; line-height: 1; font-weight: 800; letter-spacing: -.025em; }
+p.tag { margin: 24px 0 0; max-width: 760px; font-size: 32px; line-height: 1.35; opacity: .86;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style></head><body>
+<svg viewBox="0 0 1440 900"><g fill="none" stroke="%(ink)s" stroke-opacity=".08" stroke-width="2"><circle cx="720" cy="410" r="300"/><circle cx="720" cy="410" r="440"/><circle cx="720" cy="410" r="600"/></g></svg>
+<div class="c">%(icon)s<p class="eyebrow">An amaris ct project</p><h1 id="t">%(title)s</h1><p class="tag">%(tagline)s</p></div>
+<script>const h = document.getElementById("t"); let s = 112; while (h.scrollWidth > 780 && s > 56) { s -= 4; h.style.fontSize = s + "px"; }</script>
+</body></html>"""
+
+
+def mix(hex_color, other, amount):
+    a = [int(hex_color[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(other[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x + (y - x) * amount):02x}" for x, y in zip(a, b))
+
+
+def make_cover(p, theme, dest):
+    """Draw a cover for a project with no share image: its icon, name and
+    tagline on its own brand color (or silver)."""
+    import base64
     from playwright.sync_api import sync_playwright
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page(viewport={"width": 1440, "height": 900})
-        page.goto(url, wait_until="networkidle", timeout=45_000)
-        page.wait_for_timeout(2000)
-        png = page.screenshot()
+    base = theme if re.fullmatch(r"#[0-9a-fA-F]{6}", theme or "") else "#c9c9c7"
+    r, g, b = (int(base[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    light_bg = (0.2126 * r + 0.7152 * g + 0.0722 * b) > 0.45
+    icon = ""
+    icon_file = ROOT / p["icon"] if p["icon"] else None
+    if icon_file and icon_file.exists():
+        icon = f'<img class="icon" src="data:image/png;base64,{base64.b64encode(icon_file.read_bytes()).decode()}">'
+    page = COVER % {
+        "base": base, "light": mix(base, "#ffffff", .38), "dark": mix(base, "#000000", .22),
+        "ink": "#1d1d1d" if light_bg else "#ffffff",
+        "icon": icon, "title": e(p["title"]), "tagline": e(p["tagline"] or "A new project from the studio."),
+    }
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch()
+        tab = browser.new_page(viewport={"width": 1440, "height": 900})
+        tab.set_content(page)
+        tab.wait_for_timeout(300)
+        png = tab.screenshot()
         browser.close()
     im = Image.open(io.BytesIO(png)).convert("RGB").resize((1200, 750), Image.LANCZOS)
     dest.parent.mkdir(parents=True, exist_ok=True)
-    im.save(dest, quality=84, method=6)
+    im.save(dest, quality=86, method=6)
 
 
 # ---------------------------------------------------------------- projects
@@ -275,6 +317,7 @@ def resolve(entry, repos, owner):
         "image": picture,
         "image_alt": entry.get("image_alt") or (f"{title}’s website" if picture else ""),
         "image_position": entry.get("image_position") or "",
+        "image_still": entry.get("image_still") or "",
         "icon": icon,
         "featured": bool(entry.get("featured")),
     }
@@ -313,9 +356,12 @@ def card_html(p, number, total):
         wh = f' width="{size[0]}" height="{size[1]}"' if size else ""
         if p["image_position"]:
             wh += f' style="object-position: {e(p["image_position"])}"'
+        still = p["image_still"] or p["image"]
+        art = f'<img class="g-art" src="{e(p["image"])}"{wh} alt="{e(p["image_alt"])}" loading="lazy" decoding="async">'
+        if p["image_still"]:   # moving cover: show the still frame to visitors who prefer less motion
+            art = f'<picture><source media="(prefers-reduced-motion: reduce)" srcset="{e(still)}">{art}</picture>'
         media = (
-            f'<div class="g-media"><img class="g-blur" src="{e(p["image"])}" alt="" loading="lazy" decoding="async">'
-            f'<img class="g-art" src="{e(p["image"])}"{wh} alt="{e(p["image_alt"])}" loading="lazy" decoding="async"></div>'
+            f'<div class="g-media"><img class="g-blur" src="{e(still)}" alt="" loading="lazy" decoding="async">{art}</div>'
         )
     else:
         media = f'<div class="g-media g-blank"><span aria-hidden="true">{e(p["title"])}</span></div>'
@@ -415,7 +461,7 @@ def render(cfg, repos, log):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--fetch", action="store_true", help="look on GitHub for new projects")
-    parser.add_argument("--screenshots", action="store_true", help="screenshot new sites that have no picture")
+    parser.add_argument("--covers", action="store_true", help="draw covers for new projects that have no share image")
     args = parser.parse_args()
 
     cfg = load_json(PROJECTS_FILE, None)
@@ -495,28 +541,26 @@ def main():
         save_json(PROJECTS_FILE, cfg)
         save_json(LOG_FILE, log)
 
-    # New projects with a live site but no picture get a screenshot.
-    missing = []
-    for entry in cfg["projects"]:
-        if entry.get("auto") and not entry.get("image") and not (ASSETS / f"{entry['repo']}.webp").exists():
-            address = project_site(owner, repos.get(entry["repo"], {"name": entry["repo"]}))
-            if address and repos.get(entry["repo"], {}).get("site"):
-                missing.append((entry["repo"], address))
-    if args.screenshots:
-        for repo, address in missing:
+    # New projects without a share image get a drawn cover.
+    missing = [entry for entry in cfg["projects"]
+               if entry.get("auto") and not entry.get("image") and not (ASSETS / f"{entry['repo']}.webp").exists()]
+    if args.covers:
+        for entry in missing:
+            p = resolve(entry, repos, owner)
+            theme = (repos.get(entry["repo"], {}).get("site") or {}).get("theme", "")
             try:
-                screenshot(address, ASSETS / f"{repo}.webp")
-                print(f"  screenshot saved for {repo}")
+                make_cover(p, theme, ASSETS / f"{entry['repo']}.webp")
+                print(f"  cover drawn for {entry['repo']}")
             except Exception as exc:
-                print(f"  could not screenshot {repo}: {exc}")
-        missing = [m for m in missing if not (ASSETS / f"{m[0]}.webp").exists()]
+                print(f"  could not draw a cover for {entry['repo']}: {exc}")
+        missing = [m for m in missing if not (ASSETS / f"{m['repo']}.webp").exists()]
 
     changed, projects = render(cfg, repos, log)
     print(f"Gallery has {len(projects)} projects; page {'updated' if changed else 'unchanged'}.")
 
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
-            out.write(f"needs_screenshots={'true' if missing and not args.screenshots else 'false'}\n")
+            out.write(f"needs_covers={'true' if missing and not args.covers else 'false'}\n")
     if os.environ.get("RUNNER_TEMP"):
         message = f"Add {', '.join(added)} to the studio gallery" if added else "Update studio projects"
         notes = Path(os.environ["RUNNER_TEMP"]) / "commit-message.txt"

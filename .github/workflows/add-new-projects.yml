@@ -1,11 +1,13 @@
 name: Add new projects to the studio gallery
 
-# Every 30 minutes, look at the AmarisCT GitHub account. A new public repo with
+# Every 15 minutes, look at the AmarisCT GitHub account. A new public repo with
 # a description or a live site is added to the gallery and the studio log on
 # https://amarisct.github.io/Amaris/. See scripts/build_projects.py.
+# (GitHub sometimes skips scheduled runs when it's busy, so the schedule is
+# more frequent than strictly needed.)
 on:
   schedule:
-    - cron: "11,41 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -43,15 +45,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/build_projects.py --fetch
 
-      - name: Install a browser for screenshots
-        if: steps.look.outputs.needs_screenshots == 'true'
+      - name: Install a browser for drawing covers
+        if: steps.look.outputs.needs_covers == 'true'
         run: |
           pip install --quiet playwright
           python -m playwright install --with-deps chromium
 
-      - name: Screenshot new project sites
-        if: steps.look.outputs.needs_screenshots == 'true'
-        run: python scripts/build_projects.py --screenshots
+      - name: Draw covers for new projects
+        if: steps.look.outputs.needs_covers == 'true'
+        run: python scripts/build_projects.py --covers
 
       - name: Publish changes
         id: publish

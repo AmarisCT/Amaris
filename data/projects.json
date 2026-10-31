@@ -18,29 +18,29 @@
       },
       "url": "https://amarisct.github.io/Artificially-Intelligent/",
       "link_label": "Visit the archive",
-      "image": "artificially-intelligent-preview.webp",
-      "image_alt": "Pages from the Artificially Intelligent research archive laid out on a dark, glowing grid around its constellation of research concepts",
-      "icon": "assets/projects/Artificially-Intelligent-icon.png",
-      "image_position": "left center"
+      "image": "assets/projects/Artificially-Intelligent.webp",
+      "image_alt": "Artificially Intelligent cover: the Two Minds mark and the title in serif type above Human × Machine Learning, over a dark constellation",
+      "icon": "assets/projects/Artificially-Intelligent-icon.png"
     },
     {
-      "id": "tarotparot",
+      "id": "tarotparrot",
       "repo": "TarotParot",
-      "title": "TarotParot",
+      "title": "TarotParrot",
       "kind": "App · Tarot readings",
       "started": "2026-10-29",
       "tagline": "A little birdie told me.",
-      "summary": "Tarot shuffled by you. Your touch, your device’s motion and the moment you ask shape every deck, read for your question with original watercolor-and-gold cards.",
+      "summary": "Tarot shuffled by you. Your touch, your device’s motion and the moment you ask shape every deck, and each reading opens with a direct answer to your question, told through original watercolor-and-gold cards.",
       "details": {
         "Medium": "Installable web app",
-        "Spreads": "Single Pull, Past · Present · Future, Celtic Cross",
+        "Spreads": "Ten, from Single Pull to Celtic Cross",
         "Status": "Live"
       },
       "url": "https://amarisct.github.io/TarotParot/",
       "link_label": "Get a reading",
       "image": "assets/projects/TarotParot.webp",
-      "image_alt": "TarotParot’s home screen: the line A little birdie told me. over a swirling watercolor background, with a question box and three spreads to choose from",
-      "icon": "assets/projects/TarotParot-icon.png"
+      "image_alt": "TarotParrot cover: the parrot perched on a glowing crystal ball above the title and A little birdie told me., over the app’s moving watercolor sky",
+      "icon": "assets/projects/TarotParot-icon.png",
+      "image_still": "assets/projects/TarotParot-still.webp"
     },
     {
       "id": "dessert-spotter",
@@ -58,7 +58,7 @@
       "url": "https://amarisct.github.io/dessertspotter/",
       "link_label": "Find a dessert",
       "image": "assets/projects/dessertspotter.webp",
-      "image_alt": "Dessert Spotter’s home page asking Craving tiramisu? beside a phone showing nearby cheesecake on a spotting radar",
+      "image_alt": "Dessert Spotter cover: the ice cream cone and magnifying glass logo, the title and Crave it. Find it. Rate it., on a spotting radar with dessert names around it",
       "icon": "assets/projects/dessertspotter-icon.png"
     },
     {
@@ -74,8 +74,9 @@
       },
       "url": "worlds.html",
       "link_label": "See the four directions",
-      "image": "creative-world-1.webp",
-      "image_alt": "Pencil sketchbook featuring a dog and a quiet room"
+      "image": "assets/projects/creative-worlds.webp",
+      "image_alt": "Creative Worlds cover: the title Worlds worth lingering in. framed by four pinned prints in pencil, collage, print and photography",
+      "icon": "assets/projects/creative-worlds-icon.png"
     },
     {
       "id": "weekly-planner",
@@ -91,8 +92,9 @@
       },
       "url": "https://amarisct.github.io/Weekly-Planner/",
       "link_label": "Preview the planner",
-      "image": "weekly-planner-preview.webp",
-      "image_alt": "The Weekly Planner preview: a cozy pink illustrated desk room"
+      "image": "assets/projects/Weekly-Planner.webp",
+      "image_alt": "The Weekly Planner cover: a frosted card with the title and the days of the week over the pink illustrated desk room",
+      "icon": "assets/projects/Weekly-Planner-icon.png"
     }
   ],
   "not_shown": [

@@ -28,19 +28,21 @@ python3 scripts/build_projects.py
 ```
 
 - Featured projects come first, then the rest, newest first.
-- Each entry can set `title`, `kind`, `started`, `tagline` (shown in quotes), `summary`, `details`, `url`, `link_label`, `image`, `image_alt`, `image_position` and `icon`. Fields you set always win over what GitHub or the project's site says.
+- Each entry can set `title`, `kind`, `started`, `tagline` (shown in quotes), `summary`, `details`, `url`, `link_label`, `image`, `image_still`, `image_alt`, `image_position` and `icon`. Fields you set always win over what GitHub or the project's site says.
 - `not_shown` lists repos that stay off the site. To hide a project, move its repo name there. To show an older repo, add an entry for it to `projects`.
 - On the page, a script turns the cards into the 3D gallery. Without scripts, they show as a grid.
+- **Pictures are covers, not screenshots:** each project shows a designed cover in its own brand (logo, title, tagline, colors and fonts), 1200×750, in `assets/projects/<repo>.webp`. Keep the logo and title inside the middle half of the width, because side cards crop to a tall shape. A moving cover is an animated WebP; give it an `image_still` for visitors who prefer less motion (TarotParrot does).
+- The covers for the current projects were made from each project's own fonts, colors and artwork.
 
 ## New projects are added automatically
 
-`.github/workflows/add-new-projects.yml` runs every 30 minutes and on any change to `data/` or the script. It adds a repo to the gallery and the studio log when it is:
+`.github/workflows/add-new-projects.yml` runs every 15 minutes (GitHub skips some scheduled runs when it's busy) and on any change to `data/` or the script. It adds a repo to the gallery and the studio log when it is:
 
 - public, not a fork, not archived, and not empty,
 - not already listed in `data/projects.json` (`projects` or `not_shown`),
 - and has a **description** or a **live site** (its GitHub "Website" field, or GitHub Pages).
 
-The card uses the site's own title, description and share image (`og:image`), or a screenshot if the site has no share image. With no site, the card links to GitHub. Pictures go in `assets/projects/<repo>.webp`. Delete one to have it taken again.
+The card uses the site's own title, description and share image (`og:image`). Without a share image, the job draws a cover from the project's icon, name, tagline and theme color (`--covers`); it never uses a screenshot. With no site, the card links to GitHub. Pictures go in `assets/projects/<repo>.webp`. Delete one to have it made again, or replace it with a hand-made cover.
 
 `data/repos.json` is what GitHub last reported. The job writes it, so don't edit it.
 
