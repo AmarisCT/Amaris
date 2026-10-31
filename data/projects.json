@@ -114,6 +114,11 @@
       "image": "assets/projects/pierce-county-cleaning-website.webp",
       "image_alt": "Pierce County Cleaning Services cover: the PC monogram and the title in serif capitals with Clean Spaces, Clear Minds., between arched photos of folded towels and a sunlit bed",
       "icon": "assets/projects/pierce-county-cleaning-website-icon.png"
+    },
+    {
+      "repo": "Behind-The-Creator",
+      "auto": true,
+      "added": "2026-10-31"
     }
   ],
   "not_shown": [

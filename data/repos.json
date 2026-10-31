@@ -120,6 +120,24 @@
     "archived": false,
     "has_commits": true
   },
+  "Behind-The-Creator": {
+    "name": "Behind-The-Creator",
+    "description": "",
+    "homepage": "",
+    "has_pages": true,
+    "created": "2026-10-31",
+    "html_url": "https://github.com/AmarisCT/Behind-The-Creator",
+    "fork": false,
+    "archived": false,
+    "has_commits": true,
+    "site": {
+      "title": "Behind The Creator · Jasleen",
+      "description": "A letter from Jasleen, founder of amaris ct.",
+      "image": "",
+      "icon": "",
+      "theme": ""
+    }
+  },
   "BunnyBook": {
     "name": "BunnyBook",
     "description": "",
