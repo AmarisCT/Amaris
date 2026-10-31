@@ -95,11 +95,29 @@
       "image": "assets/projects/Weekly-Planner.webp",
       "image_alt": "The Weekly Planner cover: a frosted card with the title and the days of the week over the pink illustrated desk room",
       "icon": "assets/projects/Weekly-Planner-icon.png"
+    },
+    {
+      "id": "pierce-county-cleaning",
+      "repo": "pierce-county-cleaning-website",
+      "title": "Pierce County Cleaning Services",
+      "kind": "Business website · Home cleaning",
+      "started": "2026-10-15",
+      "tagline": "Clean Spaces, Clear Minds.",
+      "summary": "The website for a residential and small-business cleaning company in Tacoma, Puyallup, Lakewood, Spanaway and nearby Pierce County towns, with service and town pages, reviews, and a free quote form that emails each customer their quote.",
+      "details": {
+        "Medium": "Business website",
+        "Serves": "Tacoma, Puyallup, Lakewood, Spanaway and nearby",
+        "Status": "Live"
+      },
+      "url": "https://amarisct.github.io/pierce-county-cleaning-website/",
+      "link_label": "Visit the site",
+      "image": "assets/projects/pierce-county-cleaning-website.webp",
+      "image_alt": "Pierce County Cleaning Services cover: the PC monogram and the title in serif capitals with Clean Spaces, Clear Minds., between arched photos of folded towels and a sunlit bed",
+      "icon": "assets/projects/pierce-county-cleaning-website-icon.png"
     }
   ],
   "not_shown": [
     "dessert-spotter",
-    "pierce-county-cleaning-website",
     "Who-Are-You-Without-the-Algorithm-",
     "The-Archive",
     "DataStream",

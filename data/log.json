@@ -102,5 +102,12 @@
     "tag": "Artificially Intelligent",
     "title": "Artificially Intelligent launches",
     "text": "The research archive opens with its first essay, <a href=\"https://amarisct.github.io/Artificially-Intelligent/research/published/is-human-consciousness-connected-to-artificial-intelligence/\" target=\"_blank\" rel=\"noopener\">Is Human Consciousness Connected to Artificial Intelligence?</a>"
+  },
+  {
+    "date": "2026-10-15",
+    "tag": "Pierce County Cleaning",
+    "title": "Pierce County Cleaning Services website",
+    "url": "https://amarisct.github.io/pierce-county-cleaning-website/",
+    "text": "First build of a quiet, editorial website for a local cleaning company: services, town pages, reviews and a free quote form."
   }
 ]
